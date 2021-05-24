@@ -66,13 +66,15 @@ export default {
 
 		//CREATE--------------------------------
 		function createGol() {
+			var nam = $('#txtCNama').val();
+			var gol = $('#txtCGolongan').val();
 			$.ajax({
 				type: "POST",
 				url: "api/golongan/",
 				data: {
 					_token: CSRF_TOKEN,
-					nama:'HAU_Create',
-					golongan:'menengah',
+					nama: nam,
+					golongan:gol,
 				},
 				success: function (response) {
 					tbGol.ajax.reload();
