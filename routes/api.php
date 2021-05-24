@@ -43,6 +43,7 @@ Route::apiResources([
 //multi Delete
 Route::post('main-menu/{data}', [MenuMainController::class, 'deletebanyak']);
 Route::post('user/{user}', [UserController::class, 'deletebanyak']);
+Route::post('golongan', [GolonganController::class, 'deletebanyak']);
 
 Route::get('multiselect', [UserController::class, 'getDatas']);
 Route::get('multiakses', [MenuAksesController::class, 'getDatas']);

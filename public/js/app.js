@@ -3200,9 +3200,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    var tbGol; //CREATE--------------------------------
+    //VARIABLE------------------------------
+    var tbGol;
+    var mltDel = []; //CREATE--------------------------------
 
     function createGol() {
       var nam = $('#txtCNama').val();
@@ -3255,16 +3262,69 @@ __webpack_require__.r(__webpack_exports__);
 
     function deleteGol(ths) {
       var gId = ths.attr('gId');
-      $.ajax({
-        type: "DELETE",
-        url: "api/golongan/" + gId,
-        success: function success(response) {
-          tbGol.ajax.reload();
-          $('.modal').modal('hide');
-        }
-      });
-    } //
+      var cnfDel = confirm('Delete data ini?');
 
+      if (cnfDel) {
+        $.ajax({
+          type: "DELETE",
+          url: "api/golongan/" + gId,
+          success: function success(response) {
+            tbGol.ajax.reload();
+            $('.modal').modal('hide');
+          }
+        });
+      }
+    } //MULTI-DELETE--------------------------
+
+
+    function multiDeleteGol(ths) {
+      var gId = ths.attr('gId');
+
+      if (ths.is(':checked')) {
+        var index = mltDel.indexOf(gId);
+
+        if (index > -1) {
+          mltDel.splice(index, 1);
+        }
+
+        mltDel.push(gId);
+      } else {
+        var index = mltDel.indexOf(gId);
+
+        if (index > -1) {
+          mltDel.splice(index, 1);
+        }
+      }
+
+      $('#hdnMultiDeleteId').val(mltDel.join(','));
+
+      if (mltDel.length > 0) {
+        $('#btnMultiGolDelete').removeAttr('disabled');
+      } else {
+        $('#btnMultiGolDelete').attr('disabled', 'disabled');
+      }
+    }
+
+    $('#btnMultiGolDelete').click(function () {
+      var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?");
+
+      if (cnfMltDel) {
+        $.ajax({
+          type: "POST",
+          url: "api/golongan/",
+          data: {
+            ids: $('#hdnMultiDeleteId').val()
+          },
+          success: function success(response) {
+            tbGol.ajax.reload();
+            mltDel = [];
+            $('#hdnMultiDeleteId').val('');
+            $('#btnMultiGolDelete').attr('disabled', 'disabled');
+            $('.modal').modal('hide');
+          }
+        });
+      }
+    }); //
 
     $('.btnNewGol').click(function (e) {
       createGol();
@@ -3276,6 +3336,8 @@ __webpack_require__.r(__webpack_exports__);
       tbGol = $('.tbGol').DataTable({
         "ajax": 'api/golongan',
         "columns": [{
+          "data": "num"
+        }, {
           "data": "id"
         }, {
           "data": "nama"
@@ -3292,6 +3354,10 @@ __webpack_require__.r(__webpack_exports__);
 
           $('.btnDelGol').click(function (e) {
             deleteGol($(this));
+          }); //MULTI-DELETE
+
+          $('.chkDeleteMultiGol').click(function () {
+            multiDeleteGol($(this));
           });
         }
       });
@@ -46105,6 +46171,8 @@ var staticRenderFns = [
                   _c("tr", [
                     _c("th", [_vm._v("No")]),
                     _vm._v(" "),
+                    _c("th", [_vm._v("ID")]),
+                    _vm._v(" "),
                     _c("th", [_vm._v("Nama")]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Golongan")]),
@@ -46115,6 +46183,25 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("tbody")
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  name: "hdnMultiDeleteId",
+                  id: "hdnMultiDeleteId"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-danger",
+                  attrs: { id: "btnMultiGolDelete", disabled: "disabled" }
+                },
+                [_c("i", { staticClass: "bx bx-trash" })]
+              )
             ])
           ])
         ])

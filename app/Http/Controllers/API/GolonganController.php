@@ -19,6 +19,9 @@ class GolonganController extends Controller
                 <button class="btn btn-danger btnDelGol" gId="'.$qry->id.'"><i class="bx bx-trash"></i></button>
                 <button class="btn btn-default btnUpdGol" gId="'.$qry->id.'"><i class="bx bx-pencil"></i></button>
             ';
+            $qry->num = '
+                <input type="checkbox" name="chkDeleteMultiGol" class="chkDeleteMultiGol" gId="'.$qry->id.'">
+            '.$no;
             $data[] = $qry;
             $sentTo['data'] = $data;
         }
@@ -59,5 +62,13 @@ class GolonganController extends Controller
     public function destroy($id)
     {
         DB::table('golongans')->where('id', $id)->delete();
+    }
+
+    //Custom query
+    public function deletebanyak(Request $request)
+    {
+        $mltId = explode(',',$request->input('ids'));
+        $dat = DB::table('golongans')->whereIn('id', $mltId)->delete();
+        return $dat;
     }
 }

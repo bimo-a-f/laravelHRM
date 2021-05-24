@@ -12,6 +12,7 @@
 							<thead>
 								<tr>
 									<th>No</th>
+									<th>ID</th>
 									<th>Nama</th>
 									<th>Golongan</th>
 									<th>Act</th>
@@ -19,6 +20,10 @@
 							</thead>
 							<tbody></tbody>
 						</table>
+					</div>
+					<div class="card-footer">
+						<input type="hidden" name="hdnMultiDeleteId" id="hdnMultiDeleteId">
+						<button id="btnMultiGolDelete" class="btn btn-lg btn-danger" disabled="disabled"><i class="bx bx-trash"></i></button>
 					</div>
 				</div>
 			</div>
@@ -94,7 +99,9 @@
 <script>
 export default {
 	mounted() {
+		//VARIABLE------------------------------
 		var tbGol;
+		var mltDel=[];
 
 		//CREATE--------------------------------
 		function createGol() {
@@ -148,15 +155,60 @@ export default {
 		//DELETE--------------------------------
 		function deleteGol(ths) {
 			var gId = ths.attr('gId');
-			$.ajax({
-				type: "DELETE",
-				url: "api/golongan/"+gId,
+			var cnfDel = confirm('Delete data ini?');
+			if (cnfDel) {
+				$.ajax({
+					type: "DELETE",
+					url: "api/golongan/"+gId,
+					success: function (response) {
+						tbGol.ajax.reload();
+						$('.modal').modal('hide');
+					}
+				});
+			}
+		}
+
+		//MULTI-DELETE--------------------------
+		function multiDeleteGol(ths) {
+			var gId = ths.attr('gId');
+			if (ths.is(':checked')) {
+				var index = mltDel.indexOf(gId);
+				if (index > -1) {
+					mltDel.splice(index, 1);
+				}
+				mltDel.push(gId);
+			}else{
+				var index = mltDel.indexOf(gId);
+				if (index > -1) {
+					mltDel.splice(index, 1);
+				}
+			}
+			
+			$('#hdnMultiDeleteId').val(mltDel.join(','))
+
+			if (mltDel.length>0) {
+				$('#btnMultiGolDelete').removeAttr('disabled')
+			} else {
+				$('#btnMultiGolDelete').attr('disabled','disabled')
+			}
+		}
+		$('#btnMultiGolDelete').click(function () {
+			var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?")
+			if (cnfMltDel) {
+				$.ajax({
+				type: "POST",
+				url: "api/golongan/",
+				data: {ids:$('#hdnMultiDeleteId').val()},
 				success: function (response) {
 					tbGol.ajax.reload();
+					mltDel=[];
+					$('#hdnMultiDeleteId').val('')
+					$('#btnMultiGolDelete').attr('disabled','disabled');
 					$('.modal').modal('hide');
 				}
 			});
-		}
+			}
+		})
 
 		//
 		$('.btnNewGol').click(function (e) {
@@ -171,6 +223,7 @@ export default {
 			tbGol = $('.tbGol').DataTable({
 				"ajax":'api/golongan',
 				"columns": [
+						{ "data": "num" },
 						{ "data": "id" },
 						{ "data": "nama" },
 						{ "data": "golongan" },
@@ -186,6 +239,11 @@ export default {
 					$('.btnDelGol').click(function (e) { 
 						deleteGol($(this));
 					});
+
+					//MULTI-DELETE
+					$('.chkDeleteMultiGol').click(function () {
+						multiDeleteGol($(this));
+					})
 				}
 			})
 		});
