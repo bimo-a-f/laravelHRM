@@ -41,6 +41,7 @@ class GolonganController extends Controller
     public function show($id)
     {
         $query = DB::table('golongans')->where('id', $id)->get();
+        return $query;
     }
 
     public function update(Request $request, $id)

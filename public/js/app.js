@@ -3168,21 +3168,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var tbGol; //CREATE--------------------------------
 
     function createGol() {
+      var nam = $('#txtCNama').val();
+      var gol = $('#txtCGolongan').val();
       $.ajax({
         type: "POST",
         url: "api/golongan/",
         data: {
           _token: CSRF_TOKEN,
-          nama: 'HAU_Create',
-          golongan: 'menengah'
+          nama: nam,
+          golongan: gol
         },
         success: function success(response) {
           tbGol.ajax.reload();
+          $('.modal').modal('hide');
         }
       });
     } //UPDATE--------------------------------
@@ -3191,17 +3226,29 @@ __webpack_require__.r(__webpack_exports__);
     function updateGol(ths) {
       var gId = ths.attr('gId');
       $.ajax({
-        type: "PUT",
+        type: "GET",
         url: "api/golongan/" + gId,
-        data: {
-          _token: CSRF_TOKEN,
-          id: gId,
-          nama: 'HAU',
-          golongan: 'bawah'
-        },
         success: function success(response) {
-          tbGol.ajax.reload();
+          $('#txtUNama').val(response[0]['nama']);
+          $('#txtUGolongan').val(response[0]['golongan']);
+          $('#mdlUpdateGol').modal('show');
         }
+      });
+      $('.btnUpdateGol').click(function () {
+        $.ajax({
+          type: "PUT",
+          url: "api/golongan/" + gId,
+          data: {
+            _token: CSRF_TOKEN,
+            id: gId,
+            nama: $('#txtUNama').val(),
+            golongan: $('#txtUGolongan').val()
+          },
+          success: function success(response) {
+            tbGol.ajax.reload();
+            $('.modal').modal('hide');
+          }
+        });
       });
     } //DELETE--------------------------------
 
@@ -3213,6 +3260,7 @@ __webpack_require__.r(__webpack_exports__);
         url: "api/golongan/" + gId,
         success: function success(response) {
           tbGol.ajax.reload();
+          $('.modal').modal('hide');
         }
       });
     } //
@@ -3222,6 +3270,9 @@ __webpack_require__.r(__webpack_exports__);
       createGol();
     });
     $(document).ready(function () {
+      $('[data-dismiss="modal"]').click(function (e) {
+        $('.modal').modal('hide');
+      });
       tbGol = $('.tbGol').DataTable({
         "ajax": 'api/golongan',
         "columns": [{
@@ -46178,6 +46229,126 @@ var staticRenderFns = [
                     "button",
                     {
                       staticClass: "btn btn-primary btnNewGol",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Save changes")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "mdlUpdateGol",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "CreateModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-lg",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "CreateModal" }
+                    },
+                    [_vm._v("Create Golongan")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtUNama" }
+                      },
+                      [_vm._v("Nama")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "txtUNama",
+                          placeholder: "Nama"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtUGolongan" }
+                      },
+                      [_vm._v("Golongan")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "txtUGolongan",
+                          placeholder: "Golongan"
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btnUpdateGol",
                       attrs: { type: "button" }
                     },
                     [_vm._v("Save changes")]

@@ -55,6 +55,38 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal Update Golongan -->
+		<div class="modal fade" id="mdlUpdateGol" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="CreateModal">Create Golongan</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label for="txtUNama" class="col-sm-3 col-form-label">Nama</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="txtUNama" placeholder="Nama">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="txtUGolongan" class="col-sm-3 col-form-label">Golongan</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="txtUGolongan" placeholder="Golongan">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary btnUpdateGol">Save changes</button>
+				</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	
@@ -78,6 +110,7 @@ export default {
 				},
 				success: function (response) {
 					tbGol.ajax.reload();
+					$('.modal').modal('hide');
 				}
 			});
 		}
@@ -86,18 +119,30 @@ export default {
 		function updateGol(ths) {
 			var gId = ths.attr('gId');
 			$.ajax({
-				type: "PUT",
+				type: "GET",
 				url: "api/golongan/"+gId,
-				data: {
-					_token: CSRF_TOKEN,
-					id:gId,
-					nama:'HAU',
-					golongan:'bawah',
-				},
 				success: function (response) {
-					tbGol.ajax.reload();
+					$('#txtUNama').val(response[0]['nama'])
+					$('#txtUGolongan').val(response[0]['golongan'])
+					$('#mdlUpdateGol').modal('show')
 				}
 			});
+			$('.btnUpdateGol').click(function () {
+				$.ajax({
+					type: "PUT",
+					url: "api/golongan/"+gId,
+					data: {
+						_token: CSRF_TOKEN,
+						id:gId,
+						nama:$('#txtUNama').val(),
+						golongan:$('#txtUGolongan').val(),
+					},
+					success: function (response) {
+						tbGol.ajax.reload();
+						$('.modal').modal('hide');
+					}
+				});
+			})
 		}
 
 		//DELETE--------------------------------
@@ -108,6 +153,7 @@ export default {
 				url: "api/golongan/"+gId,
 				success: function (response) {
 					tbGol.ajax.reload();
+					$('.modal').modal('hide');
 				}
 			});
 		}
@@ -118,6 +164,10 @@ export default {
 		});
 
 		$(document).ready(function () {
+			$('[data-dismiss="modal"]').click(function (e) { 
+				$('.modal').modal('hide');
+			});
+
 			tbGol = $('.tbGol').DataTable({
 				"ajax":'api/golongan',
 				"columns": [
