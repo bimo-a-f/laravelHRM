@@ -4,7 +4,10 @@
 			<div class="col-md-8">
 				<div class="card">
 					<div class="card-header">
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlCreateGol"><i class="bx bx-plus"></i></button> Example Component Golongan
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlCreateGol"><i class="bx bx-plus"></i></button>
+						
+						<input type="hidden" name="hdnMultiDeleteId" id="hdnMultiDeleteId">
+						<button id="btnMultiGolDelete" class="btn btn-lg btn-danger float-right" disabled="disabled"><i class="bx bx-trash"></i></button>
 					</div>
 						
 					<div class="card-body">
@@ -22,8 +25,6 @@
 						</table>
 					</div>
 					<div class="card-footer">
-						<input type="hidden" name="hdnMultiDeleteId" id="hdnMultiDeleteId">
-						<button id="btnMultiGolDelete" class="btn btn-lg btn-danger" disabled="disabled"><i class="bx bx-trash"></i></button>
 					</div>
 				</div>
 			</div>
@@ -55,7 +56,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary btnNewGol">Save changes</button>
+					<button type="button" class="btn btn-primary btnNewGol" data-dismiss="modal">Save changes</button>
 				</div>
 				</div>
 			</div>
@@ -116,8 +117,8 @@ export default {
 					golongan:gol,
 				},
 				success: function (response) {
-					tbGol.ajax.reload();
 					$('.modal').modal('hide');
+					tbGol.ajax.reload();
 				}
 			});
 		}
@@ -145,8 +146,8 @@ export default {
 						golongan:$('#txtUGolongan').val(),
 					},
 					success: function (response) {
-						tbGol.ajax.reload();
 						$('.modal').modal('hide');
+						tbGol.ajax.reload();
 					}
 				});
 			})
@@ -161,8 +162,8 @@ export default {
 					type: "DELETE",
 					url: "api/golongan/"+gId,
 					success: function (response) {
-						tbGol.ajax.reload();
 						$('.modal').modal('hide');
+						tbGol.ajax.reload();
 					}
 				});
 			}
@@ -197,25 +198,26 @@ export default {
 			if (cnfMltDel) {
 				$.ajax({
 				type: "POST",
-				url: "api/golongan/",
+				url: "api/golonganMultiDelete/",
 				data: {ids:$('#hdnMultiDeleteId').val()},
 				success: function (response) {
+					$('.modal').modal('hide');
 					tbGol.ajax.reload();
 					mltDel=[];
 					$('#hdnMultiDeleteId').val('')
 					$('#btnMultiGolDelete').attr('disabled','disabled');
-					$('.modal').modal('hide');
 				}
 			});
 			}
 		})
 
 		//
-		$('.btnNewGol').click(function (e) {
-			createGol();
-		});
 
 		$(document).ready(function () {
+			$('.btnNewGol').click(function (e) {
+				createGol();
+			});
+			
 			$('[data-dismiss="modal"]').click(function (e) { 
 				$('.modal').modal('hide');
 			});

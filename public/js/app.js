@@ -3205,6 +3205,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     //VARIABLE------------------------------
@@ -3223,8 +3224,8 @@ __webpack_require__.r(__webpack_exports__);
           golongan: gol
         },
         success: function success(response) {
-          tbGol.ajax.reload();
           $('.modal').modal('hide');
+          tbGol.ajax.reload();
         }
       });
     } //UPDATE--------------------------------
@@ -3252,8 +3253,8 @@ __webpack_require__.r(__webpack_exports__);
             golongan: $('#txtUGolongan').val()
           },
           success: function success(response) {
-            tbGol.ajax.reload();
             $('.modal').modal('hide');
+            tbGol.ajax.reload();
           }
         });
       });
@@ -3269,8 +3270,8 @@ __webpack_require__.r(__webpack_exports__);
           type: "DELETE",
           url: "api/golongan/" + gId,
           success: function success(response) {
-            tbGol.ajax.reload();
             $('.modal').modal('hide');
+            tbGol.ajax.reload();
           }
         });
       }
@@ -3311,25 +3312,25 @@ __webpack_require__.r(__webpack_exports__);
       if (cnfMltDel) {
         $.ajax({
           type: "POST",
-          url: "api/golongan/",
+          url: "api/golonganMultiDelete/",
           data: {
             ids: $('#hdnMultiDeleteId').val()
           },
           success: function success(response) {
+            $('.modal').modal('hide');
             tbGol.ajax.reload();
             mltDel = [];
             $('#hdnMultiDeleteId').val('');
             $('#btnMultiGolDelete').attr('disabled', 'disabled');
-            $('.modal').modal('hide');
           }
         });
       }
     }); //
 
-    $('.btnNewGol').click(function (e) {
-      createGol();
-    });
     $(document).ready(function () {
+      $('.btnNewGol').click(function (e) {
+        createGol();
+      });
       $('[data-dismiss="modal"]').click(function (e) {
         $('.modal').modal('hide');
       });
@@ -46162,7 +46163,23 @@ var staticRenderFns = [
                 },
                 [_c("i", { staticClass: "bx bx-plus" })]
               ),
-              _vm._v(" Example Component Golongan\n\t\t\t\t")
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  name: "hdnMultiDeleteId",
+                  id: "hdnMultiDeleteId"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-danger float-right",
+                  attrs: { id: "btnMultiGolDelete", disabled: "disabled" }
+                },
+                [_c("i", { staticClass: "bx bx-trash" })]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
@@ -46185,24 +46202,7 @@ var staticRenderFns = [
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-footer" }, [
-              _c("input", {
-                attrs: {
-                  type: "hidden",
-                  name: "hdnMultiDeleteId",
-                  id: "hdnMultiDeleteId"
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-danger",
-                  attrs: { id: "btnMultiGolDelete", disabled: "disabled" }
-                },
-                [_c("i", { staticClass: "bx bx-trash" })]
-              )
-            ])
+            _c("div", { staticClass: "card-footer" })
           ])
         ])
       ]),
@@ -46316,7 +46316,7 @@ var staticRenderFns = [
                     "button",
                     {
                       staticClass: "btn btn-primary btnNewGol",
-                      attrs: { type: "button" }
+                      attrs: { type: "button", "data-dismiss": "modal" }
                     },
                     [_vm._v("Save changes")]
                   )
