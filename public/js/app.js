@@ -3130,6 +3130,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var tbGol; //CREATE--------------------------------
@@ -45998,36 +46036,158 @@ var staticRenderFns = [
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-default btnNewGol",
-                  attrs: { type: "button" }
+                  staticClass: "btn btn-default",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "modal",
+                    "data-target": "#mdlCreateGol"
+                  }
                 },
                 [_c("i", { staticClass: "bx bx-plus" })]
               ),
-              _vm._v(" Example Component Golongan")
-            ]),
-            _vm._v(" "),
-            _c("table", { staticClass: "tbGol" }, [
-              _c("thead", [
-                _c("tr", [
-                  _c("th", [_vm._v("No")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Nama")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Golongan")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Act")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tbody")
+              _vm._v(" Example Component Golongan\n\t\t\t\t")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v("I'm an example component Grade.")
+              _c("table", { staticClass: "tbGol" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [_vm._v("No")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Nama")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Golongan")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Act")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tbody")
+              ])
             ])
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "mdlCreateGol",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "CreateModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-lg",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "CreateModal" }
+                    },
+                    [_vm._v("Create Golongan")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtCNama" }
+                      },
+                      [_vm._v("Nama")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "txtCNama",
+                          placeholder: "Nama"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtCGolongan" }
+                      },
+                      [_vm._v("Golongan")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "txtCGolongan",
+                          placeholder: "Golongan"
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btnNewGol",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Save changes")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
     ])
   }
 ]

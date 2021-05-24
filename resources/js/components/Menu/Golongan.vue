@@ -3,7 +3,11 @@
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
-					<div class="card-header"><button type="button" class="btn btn-default btnNewGol"><i class="bx bx-plus"></i></button> Example Component Golongan</div>
+					<div class="card-header">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlCreateGol"><i class="bx bx-plus"></i></button> Example Component Golongan
+					</div>
+						
+					<div class="card-body">
 						<table class="tbGol">
 							<thead>
 								<tr>
@@ -15,11 +19,45 @@
 							</thead>
 							<tbody></tbody>
 						</table>
-					<div class="card-body">I'm an example component Grade.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal Create Golongan -->
+		<div class="modal fade" id="mdlCreateGol" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="CreateModal">Create Golongan</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label for="txtCNama" class="col-sm-3 col-form-label">Nama</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="txtCNama" placeholder="Nama">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="txtCGolongan" class="col-sm-3 col-form-label">Golongan</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="txtCGolongan" placeholder="Golongan">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary btnNewGol">Save changes</button>
+				</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	
 </template>
 <script>
 export default {
