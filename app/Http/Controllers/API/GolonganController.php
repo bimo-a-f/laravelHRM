@@ -13,6 +13,7 @@ class GolonganController extends Controller
     {
         $query = DB::table('golongans')->get();
         $no=0;
+        $sentTo['data']=[];
         foreach ($query as $key => $qry) {
             $no++;
             $qry->link = '

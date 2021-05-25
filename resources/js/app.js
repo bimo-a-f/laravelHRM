@@ -52,6 +52,7 @@ Vue.use(VueRouter)
         { path: '/manage-sub-menu', component:require('./components/Menu/SubMenu.vue').default },
         //*Menu*//
         { path: '/golongan', component:require('./components/Menu/Golongan.vue').default },
+        { path: '/buku-tamu', component:require('./components/Menu/BukuTamu.vue').default },
     ]
 
 

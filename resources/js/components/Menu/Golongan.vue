@@ -135,23 +135,23 @@ export default {
 					$('#mdlUpdateGol').modal('show')
 				}
 			});
-			$('.btnUpdateGol').click(function () {
-				$.ajax({
-					type: "PUT",
-					url: "api/golongan/"+gId,
-					data: {
-						_token: CSRF_TOKEN,
-						id:gId,
-						nama:$('#txtUNama').val(),
-						golongan:$('#txtUGolongan').val(),
-					},
-					success: function (response) {
-						$('.modal').modal('hide');
-						tbGol.ajax.reload();
-					}
-				});
-			})
 		}
+		$('.btnUpdateGol').click(function () {
+			$.ajax({
+				type: "PUT",
+				url: "api/golongan/"+gId,
+				data: {
+					_token: CSRF_TOKEN,
+					id:gId,
+					nama:$('#txtUNama').val(),
+					golongan:$('#txtUGolongan').val(),
+				},
+				success: function (response) {
+					$('.modal').modal('hide');
+					tbGol.ajax.reload();
+				}
+			});
+		})
 
 		//DELETE--------------------------------
 		function deleteGol(ths) {

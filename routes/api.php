@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\GolonganController;
+use App\Http\Controllers\API\BukuTamuController;
 use App\Http\Controllers\MenuAksesController;
 use App\Http\Controllers\MenuMainController;
 use App\Models\MenuMain;
@@ -39,11 +40,16 @@ Route::apiResources([
 Route::apiResources([
     'golongan' => GolonganController::class,
 ]);
+Route::apiResources([
+    'buku-tamu' => BukuTamuController::class,
+]);
 
 //multi Delete
 Route::post('main-menu/{data}', [MenuMainController::class, 'deletebanyak']);
 Route::post('user/{user}', [UserController::class, 'deletebanyak']);
 Route::post('golonganMultiDelete', [GolonganController::class, 'deletebanyak']);
+Route::post('bukuTamuMultiDelete', [BukuTamuController::class, 'deletebanyak']);
+Route::put('tamu-selesai/{id}', [BukuTamuController::class, 'tamuSelesai']);
 
 Route::get('multiselect', [UserController::class, 'getDatas']);
 Route::get('multiakses', [MenuAksesController::class, 'getDatas']);

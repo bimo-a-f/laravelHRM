@@ -3096,6 +3096,303 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/BukuTamu.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/BukuTamu.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    //VARIABLE------------------------------
+    var tbBkTm;
+    var mltDel = []; //CREATE--------------------------------
+
+    function createBkTm() {
+      $.ajax({
+        type: "POST",
+        url: "api/buku-tamu/",
+        data: {
+          _token: CSRF_TOKEN,
+          nama: $('#txtCNama').val(),
+          keperluan: $('#txtCKeperluan').val()
+        },
+        success: function success(response) {
+          $('.modal').modal('hide');
+          tbBkTm.ajax.reload();
+        }
+      });
+    } //TAMU-SELESAI--------------------------
+
+
+    function tamuSelesai(ths) {
+      var btId = ths.attr('btId');
+      var cnfSls = confirm('Kunjungan Tamu Ini Selesai?');
+
+      if (cnfSls) {
+        $.ajax({
+          type: "PUT",
+          url: "api/tamu-selesai/" + btId,
+          success: function success(response) {
+            $('.modal').modal('hide');
+            tbBkTm.ajax.reload();
+          }
+        });
+      }
+    } //UPDATE--------------------------------
+
+
+    var btId = '';
+
+    function updateBkTm(ths) {
+      btId = ths.attr('btId');
+      $.ajax({
+        type: "GET",
+        url: "api/buku-tamu/" + btId,
+        success: function success(response) {
+          $('#txtUNama').val(response[0]['nama_tamu']);
+          $('#txtUKeperluan').val(response[0]['keperluan']);
+          $('#mdlUpdateBkTm').modal('show');
+        }
+      });
+    }
+
+    $('.btnUpdateBkTm').click(function () {
+      $.ajax({
+        type: "PUT",
+        url: "api/buku-tamu/" + btId,
+        data: {
+          _token: CSRF_TOKEN,
+          id: btId,
+          nama: $('#txtUNama').val(),
+          keperluan: $('#txtUKeperluan').val()
+        },
+        success: function success(response) {
+          $('.modal').modal('hide');
+          tbBkTm.ajax.reload();
+        }
+      });
+    }); //DELETE--------------------------------
+
+    function deleteBkTm(ths) {
+      var btId = ths.attr('btId');
+      var cnfDel = confirm('Delete data ini?');
+
+      if (cnfDel) {
+        $.ajax({
+          type: "DELETE",
+          url: "api/buku-tamu/" + btId,
+          success: function success(response) {
+            $('.modal').modal('hide');
+            tbBkTm.ajax.reload();
+          }
+        });
+      }
+    } //MULTI-DELETE--------------------------
+
+
+    function multiDeleteBkTm(ths) {
+      var btId = ths.attr('btId');
+
+      if (ths.is(':checked')) {
+        var index = mltDel.indexOf(btId);
+
+        if (index > -1) {
+          mltDel.splice(index, 1);
+        }
+
+        mltDel.push(btId);
+      } else {
+        var index = mltDel.indexOf(btId);
+
+        if (index > -1) {
+          mltDel.splice(index, 1);
+        }
+      }
+
+      $('#hdnMultiDeleteId').val(mltDel.join(','));
+
+      if (mltDel.length > 0) {
+        $('#btnMultiBkTmDelete').removeAttr('disabled');
+      } else {
+        $('#btnMultiBkTmDelete').attr('disabled', 'disabled');
+      }
+
+      $('#btnMultiBkTmDelete').click(function () {
+        var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?");
+
+        if (cnfMltDel) {
+          $.ajax({
+            type: "POST",
+            url: "api/bukuTamuMultiDelete/",
+            data: {
+              ids: $('#hdnMultiDeleteId').val()
+            },
+            success: function success(response) {
+              $('.modal').modal('hide');
+              tbBkTm.ajax.reload();
+              mltDel = [];
+              $('#hdnMultiDeleteId').val('');
+              $('#btnMultiBkTmDelete').attr('disabled', 'disabled');
+            }
+          });
+        }
+      });
+    } //--------------------------------------
+
+
+    $(document).ready(function () {
+      $('.btnNewBkTm').click(function (e) {
+        createBkTm();
+      });
+      $('[data-dismiss="modal"]').click(function (e) {
+        $('.modal').modal('hide');
+      });
+      tbBkTm = $('.tbBkTm').DataTable({
+        "ajax": 'api/buku-tamu',
+        "columns": [{
+          "data": "num"
+        }, {
+          "data": "id"
+        }, {
+          "data": "nama_tamu"
+        }, {
+          "data": "keperluan"
+        }, {
+          "data": "lama_kunjungan"
+        }, {
+          "data": "link"
+        }],
+        "drawCallback": function drawCallback(setting) {
+          //TAMU-SELESAI--------------------------
+          $('.btnTamuSelesai').click(function (e) {
+            tamuSelesai($(this));
+          }); //UPDATE--------------------------------
+
+          $('.btnUpdBkTm').click(function (e) {
+            updateBkTm($(this));
+          }); //DELETE--------------------------------
+
+          $('.btnDelBkTm').click(function (e) {
+            deleteBkTm($(this));
+          }); //MULTI-DELETE
+
+          $('.chkDeleteMultiBkTm').click(function () {
+            multiDeleteBkTm($(this));
+          });
+        }
+      });
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/Golongan.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/Golongan.vue?vue&type=script&lang=js& ***!
@@ -3242,24 +3539,24 @@ __webpack_require__.r(__webpack_exports__);
           $('#mdlUpdateGol').modal('show');
         }
       });
-      $('.btnUpdateGol').click(function () {
-        $.ajax({
-          type: "PUT",
-          url: "api/golongan/" + gId,
-          data: {
-            _token: CSRF_TOKEN,
-            id: gId,
-            nama: $('#txtUNama').val(),
-            golongan: $('#txtUGolongan').val()
-          },
-          success: function success(response) {
-            $('.modal').modal('hide');
-            tbGol.ajax.reload();
-          }
-        });
-      });
-    } //DELETE--------------------------------
+    }
 
+    $('.btnUpdateGol').click(function () {
+      $.ajax({
+        type: "PUT",
+        url: "api/golongan/" + gId,
+        data: {
+          _token: CSRF_TOKEN,
+          id: gId,
+          nama: $('#txtUNama').val(),
+          golongan: $('#txtUGolongan').val()
+        },
+        success: function success(response) {
+          $('.modal').modal('hide');
+          tbGol.ajax.reload();
+        }
+      });
+    }); //DELETE--------------------------------
 
     function deleteGol(ths) {
       var gId = ths.attr('gId');
@@ -4500,6 +4797,9 @@ var routes = [{
 {
   path: '/golongan',
   component: __webpack_require__(/*! ./components/Menu/Golongan.vue */ "./resources/js/components/Menu/Golongan.vue").default
+}, {
+  path: '/buku-tamu',
+  component: __webpack_require__(/*! ./components/Menu/BukuTamu.vue */ "./resources/js/components/Menu/BukuTamu.vue").default
 }];
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__.default({
@@ -43859,6 +44159,45 @@ component.options.__file = "resources/js/components/Menu/AksesMenu.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Menu/BukuTamu.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/Menu/BukuTamu.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BukuTamu_vue_vue_type_template_id_9f7eae32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BukuTamu.vue?vue&type=template&id=9f7eae32& */ "./resources/js/components/Menu/BukuTamu.vue?vue&type=template&id=9f7eae32&");
+/* harmony import */ var _BukuTamu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BukuTamu.vue?vue&type=script&lang=js& */ "./resources/js/components/Menu/BukuTamu.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _BukuTamu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _BukuTamu_vue_vue_type_template_id_9f7eae32___WEBPACK_IMPORTED_MODULE_0__.render,
+  _BukuTamu_vue_vue_type_template_id_9f7eae32___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Menu/BukuTamu.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Menu/Golongan.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/Menu/Golongan.vue ***!
@@ -44041,6 +44380,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AksesMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AksesMenu.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/AksesMenu.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AksesMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Menu/BukuTamu.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Menu/BukuTamu.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BukuTamu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./BukuTamu.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/BukuTamu.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BukuTamu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -44321,6 +44676,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AksesMenu_vue_vue_type_template_id_b375155e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AksesMenu_vue_vue_type_template_id_b375155e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AksesMenu.vue?vue&type=template&id=b375155e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/AksesMenu.vue?vue&type=template&id=b375155e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Menu/BukuTamu.vue?vue&type=template&id=9f7eae32&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Menu/BukuTamu.vue?vue&type=template&id=9f7eae32& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BukuTamu_vue_vue_type_template_id_9f7eae32___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BukuTamu_vue_vue_type_template_id_9f7eae32___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BukuTamu_vue_vue_type_template_id_9f7eae32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./BukuTamu.vue?vue&type=template&id=9f7eae32& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/BukuTamu.vue?vue&type=template&id=9f7eae32&");
 
 
 /***/ }),
@@ -46117,6 +46489,342 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/BukuTamu.vue?vue&type=template&id=9f7eae32&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Menu/BukuTamu.vue?vue&type=template&id=9f7eae32& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "modal",
+                    "data-target": "#mdlCreateBkTm"
+                  }
+                },
+                [_c("i", { staticClass: "bx bx-plus" })]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  name: "hdnMultiDeleteId",
+                  id: "hdnMultiDeleteId"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-danger float-right",
+                  attrs: { id: "btnMultiBkTmDelete", disabled: "disabled" }
+                },
+                [_c("i", { staticClass: "bx bx-trash" })]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "tbBkTm" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [_vm._v("No")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("ID")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Nama Tamu")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Keperluan")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Lama Kunjungan")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Act")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tbody")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "mdlCreateBkTm",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "CreateModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-lg",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "CreateModal" }
+                    },
+                    [_vm._v("Create Buku-Tamu")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtCNama" }
+                      },
+                      [_vm._v("Nama Tamu")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "txtCNama",
+                          placeholder: "Nama Tamu"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtCKeperluan" }
+                      },
+                      [_vm._v("Keperluan")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("textarea", {
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "txtCKeperluan",
+                          id: "txtCKeperluan",
+                          cols: "30",
+                          rows: "10"
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btnNewBkTm",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Save changes")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "mdlUpdateBkTm",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "UpdateModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-lg",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "UpdateModal" }
+                    },
+                    [_vm._v("Update Buku-Tamu")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtUNama" }
+                      },
+                      [_vm._v("Nama Tamu")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "txtUNama",
+                          placeholder: "Nama Tamu"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-3 col-form-label",
+                        attrs: { for: "txtUKeperluan" }
+                      },
+                      [_vm._v("Keperluan")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("textarea", {
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "txtUKeperluan",
+                          id: "txtUKeperluan",
+                          cols: "30",
+                          rows: "10"
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btnUpdateBkTm",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Save changes")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
