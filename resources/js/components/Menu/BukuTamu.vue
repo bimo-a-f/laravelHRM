@@ -15,7 +15,6 @@
 							<thead>
 								<tr>
 									<th>No</th>
-									<!-- <th>ID</th> -->
 									<th>Nama Tamu</th>
 									<th>Keperluan</th>
 									<th>Lama Kunjungan</th>
@@ -118,6 +117,8 @@ export default {
 				success: function (response) {
 					$('.modal').modal('hide');
 					tbBkTm.ajax.reload();
+                    $('#txtCNama').val('')
+                    $('#txtCKeperluan').val('')
 				}
 			});
 		}
@@ -209,7 +210,6 @@ export default {
 				$('#btnMultiBkTmDelete').attr('disabled','disabled')
 			}
 		}
-            
         $('#btnMultiBkTmDelete').click(function () {
             var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?")
             if (cnfMltDel) {
@@ -243,7 +243,6 @@ export default {
 				"ajax":'api/buku-tamu',
 				"columns": [
 						{ "data": "num" },
-						// { "data": "id" },
 						{ "data": "nama_tamu" },
 						{ "data": "keperluan" },
 						{ "data": "lama_kunjungan" },

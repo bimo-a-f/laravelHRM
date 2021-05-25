@@ -3206,7 +3206,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     //VARIABLE------------------------------
@@ -3225,6 +3224,8 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(response) {
           $('.modal').modal('hide');
           tbBkTm.ajax.reload();
+          $('#txtCNama').val('');
+          $('#txtCKeperluan').val('');
         }
       });
     } //TAMU-SELESAI--------------------------
@@ -3356,8 +3357,7 @@ __webpack_require__.r(__webpack_exports__);
         "ajax": 'api/buku-tamu',
         "columns": [{
           "data": "num"
-        }, // { "data": "id" },
-        {
+        }, {
           "data": "nama_tamu"
         }, {
           "data": "keperluan"

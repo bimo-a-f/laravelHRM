@@ -17,7 +17,7 @@ class BukuTamuController extends Controller
             $no++;
             $btnTamuSelesai='<div class="btn-group" role="group" aria-label="Action">';
             if (!$qry->waktu_keluar) {
-                $btnTamuSelesai='<div class="btn-group" role="group" aria-label="Action"><button class="btn btn-sm btn-warning btnTamuSelesai" btId="'.$qry->id.'" title="Tamu Selesai"><i class="bx bxs-time bx-xs"></i></button>';
+                $btnTamuSelesai='<div class="btn-group" role="group" aria-label="Action"><button class="btn btn-sm btn-info btnTamuSelesai" btId="'.$qry->id.'" title="Tamu Selesai"><i class="bx bxs-time bx-xs"></i></button>';
             }
             $qry->link = $btnTamuSelesai.'
                 <button class="btn btn-sm btn-success btnUpdBkTm" btId="'.$qry->id.'" title="Edit Data"><i class="bx bxs-pencil bx-xs"></i></button>
