@@ -3322,29 +3322,28 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         $('#btnMultiBkTmDelete').attr('disabled', 'disabled');
       }
+    }
 
-      $('#btnMultiBkTmDelete').click(function () {
-        var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?");
+    $('#btnMultiBkTmDelete').click(function () {
+      var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?");
 
-        if (cnfMltDel) {
-          $.ajax({
-            type: "POST",
-            url: "api/bukuTamuMultiDelete/",
-            data: {
-              ids: $('#hdnMultiDeleteId').val()
-            },
-            success: function success(response) {
-              $('.modal').modal('hide');
-              tbBkTm.ajax.reload();
-              mltDel = [];
-              $('#hdnMultiDeleteId').val('');
-              $('#btnMultiBkTmDelete').attr('disabled', 'disabled');
-            }
-          });
-        }
-      });
-    } //--------------------------------------
-
+      if (cnfMltDel) {
+        $.ajax({
+          type: "POST",
+          url: "api/bukuTamuMultiDelete/",
+          data: {
+            ids: $('#hdnMultiDeleteId').val()
+          },
+          success: function success(response) {
+            $('.modal').modal('hide');
+            tbBkTm.ajax.reload();
+            mltDel = [];
+            $('#hdnMultiDeleteId').val('');
+            $('#btnMultiBkTmDelete').attr('disabled', 'disabled');
+          }
+        });
+      }
+    }); //--------------------------------------
 
     $(document).ready(function () {
       $('.btnNewBkTm').click(function (e) {
@@ -3357,9 +3356,8 @@ __webpack_require__.r(__webpack_exports__);
         "ajax": 'api/buku-tamu',
         "columns": [{
           "data": "num"
-        }, {
-          "data": "id"
-        }, {
+        }, // { "data": "id" },
+        {
           "data": "nama_tamu"
         }, {
           "data": "keperluan"
@@ -46520,7 +46518,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "col-lg-12" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
               _c(
@@ -46559,8 +46557,6 @@ var staticRenderFns = [
                 _c("thead", [
                   _c("tr", [
                     _c("th", [_vm._v("No")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("ID")]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Nama Tamu")]),
                     _vm._v(" "),

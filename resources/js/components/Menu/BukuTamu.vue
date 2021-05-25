@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-md-8">
+			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlCreateBkTm"><i class="bx bx-plus"></i></button>
@@ -15,7 +15,7 @@
 							<thead>
 								<tr>
 									<th>No</th>
-									<th>ID</th>
+									<!-- <th>ID</th> -->
 									<th>Nama Tamu</th>
 									<th>Keperluan</th>
 									<th>Lama Kunjungan</th>
@@ -208,25 +208,25 @@ export default {
 			} else {
 				$('#btnMultiBkTmDelete').attr('disabled','disabled')
 			}
+		}
             
-            $('#btnMultiBkTmDelete').click(function () {
-                var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?")
-                if (cnfMltDel) {
-                    $.ajax({
-                    type: "POST",
-                    url: "api/bukuTamuMultiDelete/",
-                    data: {ids:$('#hdnMultiDeleteId').val()},
-                    success: function (response) {
-                        $('.modal').modal('hide');
-                        tbBkTm.ajax.reload();
-                        mltDel=[];
-                        $('#hdnMultiDeleteId').val('')
-                        $('#btnMultiBkTmDelete').attr('disabled','disabled');
-                    }
-                });
+        $('#btnMultiBkTmDelete').click(function () {
+            var cnfMltDel = confirm("Anda yakin akan menghapus data yang sudah dipilih?")
+            if (cnfMltDel) {
+                $.ajax({
+                type: "POST",
+                url: "api/bukuTamuMultiDelete/",
+                data: {ids:$('#hdnMultiDeleteId').val()},
+                success: function (response) {
+                    $('.modal').modal('hide');
+                    tbBkTm.ajax.reload();
+                    mltDel=[];
+                    $('#hdnMultiDeleteId').val('')
+                    $('#btnMultiBkTmDelete').attr('disabled','disabled');
                 }
             });
-		}
+            }
+        });
 
 		//--------------------------------------
 
@@ -243,7 +243,7 @@ export default {
 				"ajax":'api/buku-tamu',
 				"columns": [
 						{ "data": "num" },
-						{ "data": "id" },
+						// { "data": "id" },
 						{ "data": "nama_tamu" },
 						{ "data": "keperluan" },
 						{ "data": "lama_kunjungan" },
